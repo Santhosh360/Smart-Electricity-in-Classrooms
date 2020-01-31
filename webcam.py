@@ -1,12 +1,19 @@
 #Constants
-ipAddress = "192.168.43.187"
-initCounter = 5
-avgThreshold = 6.0
-thresholdScore = 0.3
+ipAddress = "192.168.43.187" #IP address of nodeMCU
+
+initCounter = 5     #Used to initialize counter
+                    #The value of initCounter denotes how much time it has 
+                    #to wait to turn the electric appliances off after no person were detected. 
+
+avgThreshold = 6.0  # This threshold denotes average of all pixels below 
+                    #which object detection is impossible.
+
+thresholdScore = 0.3#Used to draw rectangles around the person if its detection accuracy is above 30%
+
 ledState = 0
 counter = 5
 personNotDetected = 1
-exitThread = 0
+exitThread = 0      #This variable is used to end all the threads if main thread is terminated.
 hostAvaliable = 0
 import threading
 import hashlib
@@ -97,7 +104,7 @@ def resetCounter():
                 counter = initCounter
             ledState = 1
             time.sleep(1)
-        print("Person not detected in thread:",personNotDetected,"\n")  
+        print("Person not detected:",personNotDetected,"\n")  
         print("LED Status:",ledState,"\n")
     
 t1 = threading.Thread(target=resetCounter)
@@ -112,10 +119,10 @@ noto = cv2.imread("not.jpg")
 
 cap = cv2.VideoCapture(0)
 
-#MODEL_NAME = 'ssdlite_mobilenet_v2_coco_2018_05_09'
+MODEL_NAME = 'ssdlite_mobilenet_v2_coco_2018_05_09'
 #MODEL_NAME = 'faster_rcnn_inception_v2_coco_2018_01_28'
 #MODEL_NAME = 'ssd_mobilenet_v1_fpn_shared_box_predictor_640x640_coco14_sync_2018_07_03'
-MODEL_NAME = 'ssd_resnet50_v1_fpn_shared_box_predictor_640x640_coco14_sync_2018_07_03'
+#MODEL_NAME = 'ssd_resnet50_v1_fpn_shared_box_predictor_640x640_coco14_sync_2018_07_03'
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
